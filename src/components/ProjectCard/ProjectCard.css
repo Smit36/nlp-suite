@@ -1,0 +1,27 @@
+.Project-Card {
+  width: 70vw;
+  margin: 3% 15%;
+}
+
+.Project-Card-Header,
+.Project-Card-Date {
+  text-align: left;
+}
+
+.Project-Card-Header {
+  margin-top: 2%;
+}
+
+.Project-Card-Expand-Button,
+.Project-Card-Compress-Button {
+  margin-top: 15px;
+}
+
+.Project-Card-Date {
+  margin-top: 2%;
+}
+
+.Project-Card-Details-Container {
+  margin-top: 30px;
+  text-align: left;
+}

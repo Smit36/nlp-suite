@@ -1,0 +1,95 @@
+.Home-Content-Container {
+  margin: 5%;
+}
+
+.Home-Header {
+  color: #d36262;
+  border-bottom: 1px solid #d3d1d1;
+  background-color: #f1f1f1;
+  height: 10vh;
+  box-shadow: 3px 4px 20px 3px #ebeaea;
+  display: flex;
+  align-items: center;
+}
+
+.Home-Header-Name {
+  margin-left: 5%;
+  font-size: 200%;
+}
+
+.Home-First {
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  color: rgb(74, 77, 78);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 300%;
+  font-weight: 300;
+}
+
+.Home-First-Left {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.Home-First-Left a {
+  text-decoration: none;
+}
+
+.Home-First button {
+  background-color: rgb(211, 98, 98);
+  color: white;
+  text-transform: uppercase;
+}
+
+.Home-First button:hover {
+  background-color: rgb(199, 71, 71);
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.Home-Second {
+  margin: 10%;
+}
+
+.Home-Second-Name {
+  color: rgba(255, 255, 255, 0.877);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 300%;
+  font-weight: 300;
+  width: 100vh;
+  height: 40vh;
+  background-color: rgb(211, 98, 98);
+}
+
+.Laptop-Screen {
+  margin-left: 5%;
+}
+
+img {
+  width: 100vh;
+  height: 60vh;
+}
+
+.Header-Login-Button a,
+.Header-Signup-Button a {
+  text-decoration: none;
+}
+
+.Header-Login-Button {
+  margin-left: 60%;
+  margin-right: 2%;
+}
+
+.Header-Signup-Button button {
+  color: white;
+  background-color: rgb(211, 98, 98);
+}
+
+.Header-Signup-Button button:hover {
+  background-color: rgb(199, 71, 71);
+}

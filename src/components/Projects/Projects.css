@@ -1,0 +1,16 @@
+.Create-New-Project-Button {
+  margin-top: 20px;
+}
+
+.No-Project-Message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.Modal-Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

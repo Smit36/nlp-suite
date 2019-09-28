@@ -1,0 +1,54 @@
+.Signup-Page {
+  margin-top: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Avatar {
+  display: inline;
+  color: white;
+  margin: 1%;
+  background-color: rgb(211, 98, 98);
+  border-radius: 100%;
+  padding: 7px 10px;
+}
+
+.Signup-Form {
+  margin-top: 3%;
+}
+
+.Signup-Username,
+.Signup-Password,
+.Signup-Button-Inside {
+  width: 60%;
+}
+
+.Signup-Button button {
+  margin: 3% auto 3% auto;
+}
+
+.Signup-Forget {
+  
+  text-decoration: none;
+  color:gray;
+}
+.Signup-Forget:hover{
+  transition: 0.3s;
+  color:rgb(3, 3, 161);
+}
+.Name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Firstname,
+.Lastname {
+  width: 49%;
+}
+
+.Email input {
+  width: 100%;
+}
