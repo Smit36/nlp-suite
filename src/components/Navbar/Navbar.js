@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -9,32 +10,37 @@ import {
   List,
   ListItem,
   ListItemText,
-} from '@material-ui/core';
-import './Navbar.css';
+  Button
+} from "@material-ui/core";
+import "./Navbar.css";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      anchorEl: null,
+      anchorEl: null
     };
   }
 
-  handleMenu = (e) => {
+  handleMenu = e => {
     this.setState({ open: !this.state.open, anchorEl: e.currentTarget });
   };
 
   render() {
     return (
-      <div className='Menu-Container'>
-        <AppBar position='static' className='Menu-Height'>
+      <div className="Menu-Container">
+        <AppBar position="static" className="Menu-Height">
           <Toolbar>
-            <div className='Header-Name'>
-              <Typography variant='h5'>NLP Suite</Typography>
+            <div className="Header-Name">
+              <Typography variant="h5">NLP Suite</Typography>
             </div>
-            <div className='Navbar-Avatar-Icon'>
-              <IconButton onClick={this.handleMenu} color='inherit' size='small'>
+            <div className="Navbar-Avatar-Icon">
+              <IconButton
+                onClick={this.handleMenu}
+                color="inherit"
+                size="small"
+              >
                 <Avatar>S</Avatar>
               </IconButton>
               <Popover
@@ -42,27 +48,27 @@ class Navbar extends Component {
                 anchorEl={this.state.anchorEl}
                 onClose={this.handleMenu}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
+                  vertical: "bottom",
+                  horizontal: "center"
                 }}
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
+                  vertical: "top",
+                  horizontal: "center"
                 }}
               >
-                <List className='Navbar-Avatar-List'>
+                <List className="Navbar-Avatar-List">
                   <ListItem button>
-                    <ListItemText primary='Profile' />
+                    <ListItemText primary="Profile" />
                   </ListItem>
                   <ListItem button>
-                    <ListItemText primary='Billing' />
+                    <ListItemText primary="Billing" />
                   </ListItem>
                   <ListItem button>
-                    <ListItemText primary='Settings' />
+                    <ListItemText primary="Settings" />
                   </ListItem>
                 </List>
               </Popover>
-            </div>
+            </div>      
           </Toolbar>
         </AppBar>
       </div>

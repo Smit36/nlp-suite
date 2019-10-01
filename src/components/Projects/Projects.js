@@ -24,17 +24,30 @@ class Projects extends Component {
 
   handleProject = (e) => {
     const newProject = {
-      projectName: 'adit',
-      createdOn: moment().format('DD-MMM-YYYY'),
-      allowedApis: ['translator', 'entities'],
+      projectName: e.projectName,
+      createdOn: moment().format('DD-MMM-YY'),
+      allowedApis: e.selectApi,
     };
-
     this.setState({
       results: true,
       showProject: false,
       projectDetails: [...this.state.projectDetails, newProject],
     });
   };
+  handleDelete=(e)=>{
+    
+    var array=[this.state.projectDetails];
+    var index=array.indexOf(e.target.value);
+    console.log(index);
+    console.log(array)
+    if(index!==0)
+    {
+      array.slice(index,0);
+      this.setState({
+        projectDetails:array
+      })
+    }
+  }
 
   render() {
     return (
@@ -54,7 +67,7 @@ class Projects extends Component {
           this.state.projectDetails.map((item, index) => {
             return (
               <div key={index}>
-                <ProjectCard projectDetails={{ ...item }} />
+                <ProjectCard projectDetails={{ ...item }} handleDelete={this.handleDelete}/>
               </div>
             );
           })

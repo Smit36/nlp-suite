@@ -1,57 +1,40 @@
-.signin-page {
+.Signin-Conatainer {
   display: flex;
-  flex-direction: row;
-}
-
-.Login {
   margin-top: 5%;
-  display: flex;
-  width: 50%;
   flex-direction: column;
   align-items: center;
 }
 
-.avatar {
+.Avatar {
   display: inline;
   color: white;
   margin: 1%;
-  background-color: rgb(233, 64, 115);
+  background-color: rgb(211, 98, 98);
   border-radius: 100%;
   padding: 7px 10px;
 }
 
-form {
+.Signin-Form-Container {
+  width: 25%;
+}
+
+.Signin-Form-Container form {
   margin-top: 3%;
+  width: 100%;
 }
 
-.line {
-  margin-top: 3%;
-  border-left: 1px solid rgba(0, 0, 0, 0.3);
-  height: 450px;
+.Signin-Email div,
+.Signin-Password div,
+.Signin-Button button {
+  width: 100%;
 }
 
-.sign-username,
-.sign-password,
-.sign-button-inside {
-  width: 70%;
-}
-
-.sign-remember {
-  margin-top: 10px;
-  margin-left: 10%;
-}
-
-.sign-button {
+.Signin-Button {
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
-.sign-forget{
-  text-decoration: none;
-  color:gray;
-}
-
-.sign-forget:hover {
+.Signin-Forget:hover {
   cursor: pointer;
-  color: #3f51b5;
- 
+  text-decoration: underline;
 }

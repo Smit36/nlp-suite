@@ -1,124 +1,161 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import { Typography, TextField, FormControlLabel, Checkbox, Button } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import './Login.css';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
+import { Typography, TextField, Button } from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import "../Navbar/Navbar";
+import "./Login.css";
+
+import { signin } from "../../controllers/signin";
+import Navbar from "../Navbar/Navbar";
 
 const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 );
 
 class Login extends Component {
-
-  constructor(props){
-
+  constructor(props) {
     super(props);
-    this.state={
-      errorMessageEmail:'',
-      errorMessagePassword:'',
-      checkErrorEmail:false,
-      checkErrorPassword:false
+    this.state = {
+      email: "",
+      password: "",
+      errorMessageEmail: "",
+      errorMessagePassword: "",
+      redirect: false
     };
   }
 
-  handleChangeEmail=(e)=>{
+  handleChangeEmail = e => {
+    const value = e.target.value;
+    let error = "";
+    if (!value) {
+      error = "This field is required.";
+    } else if (!emailRegex.test(value)) {
+      error = "Invalid Email.";
+    }
+    this.setState({
+      errorMessageEmail: error
+    });
+  };
 
-    const value=e.target.value;
-    console.log(value);
-    if(!emailRegex.test(value)){
-        this.setState({
-          checkErrorEmail:true,
-          errorMessageEmail:'Valid Email is required'
-        })
+  handleChangePassword = e => {
+    const value = e.target.value;
+    let error = "";
+    if (!value) {
+      error = "This field is required.";
     }
-    else{
-      this.setState({
-        checkErrorEmail:false,
-        errorMessageEmail:''
-      })
-      }
-      
-    }
-  handleChangePassword=(e)=>{
-    const value=e.target.value;
-    console.log(value);
-    if(value.length<3)
-    {
-      this.setState({
-        checkErrorPassword:true,
-        errorMessagePassword:'Password length must be more than 3'
-      })
-    }
-    else{
-      this.setState({
-        checkErrorPassword:false,
-        errorMessagePassword:''
-      })
-    }
+    this.setState({
+      errorMessagePassword: error
+    });
+  };
 
-  }
+  handleFieldChange = e => {
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  isDisabled = () => {
+    const { email, password } = this.state;
+    if (!emailRegex.test(email)) {
+      return true;
+    } else if (!password) {
+      return true;
+    }
+    return false;
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const isWrong = this.isDisabled();
+
+    if (!isWrong) {
+      const data = { email: this.state.email, password: this.state.password };
+      signin(data).then(res => {
+        if (!res.error) {
+          localStorage.setItem("jwt", res.access_token);
+          this.setState({ redirect: true });
+        } else {
+          if (res.errorType === "email") {
+            this.setState({ errorMessageEmail: res.errorMessage });
+          } else if (res.errorType === "password") {
+            this.setState({ errorMessagePassword: res.errorMessage });
+          } else {
+            alert("Interal Server error.");
+          }
+        }
+      });
+    }
+  };
 
   render() {
+    const isDisabled = this.isDisabled();
+
+    if (this.state.redirect) {
+      return <Redirect to="/dashboard" />;
+    }
+
     return (
-      <div className='Signin'>
-        <div className='signin-page'>
-          <div className='Login'>
-            <div className='avatar'>
-              <LockOutlinedIcon />
-            </div>
-            <div className='sign-header'>
-              <Typography variant='h5'>Sign in</Typography>
-            </div>
-            <div>
-              <form onSubmit={this.handleSubmit}>
-                <div>
-                  <TextField
-                    className='sign-username'
-                    id='outlined-dense'
-                    label='Email Id'
-                    margin='dense'
-                    variant='outlined'
-                    error={this.state.checkErrorEmail}
-                    helperText={this.state.errorMessageEmail}
-                    onBlur={this.handleChangeEmail}
-                    required
-                  />
-                  <TextField
-                    className='sign-password'
-                    id='outlined-dense'
-                    label='Password'
-                    margin='dense'
-                    variant='outlined'
-                    error={this.state.checkErrorPassword}
-                    helperText={this.state.errorMessagePassword}
-                    onBlur={this.handleChangePassword}
-                    required
-                  />
-                  <div className='sign-remember'>
-                    <FormControlLabel
-                      control={<Checkbox value='remember' color='primary' />}
-                      label='Remember me'
-                    />
-                  </div>
-                  <div className='sign-button'>
-                    <Button
-                      variant='contained'
-                      size='medium'
-                      color='primary'
-                      className='sign-button-inside'
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                  <Typography color='primary'  variant='body2'>
-                    <Link to='./dashboard' className='sign-forget'>Forget Password?</Link>
-                  </Typography>
-                </div>
-              </form>
-            </div>
+      <div className="Signin">
+        <Navbar Login/>
+        <div className="Signup-Container">
+          <div className="Avatar">
+            <LockOutlinedIcon />
           </div>
-          <div className='line'></div>
-          <div></div>
+          <div className="Signin-Header">
+            <Typography variant="h5">Sign in</Typography>
+          </div>
+          <div className="Signin-Form-Container">
+            <form noValidate onSubmit={this.handleSubmit}>
+              <div className="Signin-Email">
+                <TextField
+                  label="Email *"
+                  margin="dense"
+                  name="email"
+                  variant="outlined"
+                  error={this.state.errorMessageEmail ? true : false}
+                  helperText={this.state.errorMessageEmail}
+                  onBlur={this.handleChangeEmail}
+                  onChange={this.handleFieldChange}
+                />
+              </div>
+
+              <div className="Signin-Password">
+                <TextField
+                  label="Password *"
+                  name="password"
+                  type="password"
+                  margin="dense"
+                  variant="outlined"
+                  error={this.state.errorMessagePassword ? true : false}
+                  helperText={this.state.errorMessagePassword}
+                  onBlur={this.handleChangePassword}
+                  onChange={this.handleFieldChange}
+                />
+              </div>
+
+              <div className="Signin-Button">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  size="medium"
+                  color="primary"
+                  disabled={isDisabled}
+                >
+                  Submit
+                </Button>
+              </div>
+
+              <div>
+                <Typography
+                  color="primary"
+                  className="Signin-Forget"
+                  variant="body2"
+                >
+                  Forget password?
+                </Typography>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );

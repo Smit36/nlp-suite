@@ -38,7 +38,7 @@
 
 .Api-Items {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .Create-Button {

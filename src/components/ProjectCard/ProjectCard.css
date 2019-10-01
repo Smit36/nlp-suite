@@ -9,8 +9,25 @@
 }
 
 .Project-Card-Header {
-  margin-top: 2%;
+  margin-top: 2%;  
+  display: flex;
+  flex-direction: row;
 }
+.Project-Card-Header-Name{
+  width: 400px;
+}
+.Project-Card-Icon{
+ 
+ margin-left: 25%;
+ width: 220px;
+ justify-content:space-between;
+ display: flex;
+ flex-direction: row;
+}
+.Project-Card-Edit-Icon{
+  
+}
+
 
 .Project-Card-Expand-Button,
 .Project-Card-Compress-Button {
