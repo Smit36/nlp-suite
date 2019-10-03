@@ -1,46 +1,30 @@
-.Container {
-  margin: 10% 30%;
-}
-
-.Card-Container {
-  height: 50vh;
-  width: 40vw;
+.Modal-Container {
+  height: auto;
+  width: 65%;
+  margin: auto;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px 0 15px;
 }
 
-.Close-Container {
-  position: absolute;
-  margin: -1.4% 38%;
-  z-index: 2;
-  font-size: 5%;
-  background-color: rgb(153, 152, 152);
-  padding: 10px 15px;
-  border-radius: 50%;
-  color: white;
-  box-shadow: 0px 0px 8px 0px rgb(182, 182, 182);
-}
-
-.Close-Container:hover {
-  box-shadow: 0px 0px 8px 1px rgb(182, 182, 182);
-  cursor: pointer;
+.Modal-Content {
+  width: 100%;
 }
 
 .Api-Container {
   margin-top: 5%;
 }
 
-.Api-Selection {
+.Api-Container .Api-Selection {
   display: flex;
   flex-direction: row;
-}
-
-.Api-Items {
-  display: flex;
-  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .Create-Button {
-  margin-left: 10%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }

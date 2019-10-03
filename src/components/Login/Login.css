@@ -1,26 +1,14 @@
-.Signin-Conatainer {
+.Signin-Container {
   display: flex;
-  margin-top: 5%;
+  height: 75vh;
   flex-direction: column;
   align-items: center;
-}
-
-.Avatar {
-  display: inline;
-  color: white;
-  margin: 1%;
-  background-color: rgb(211, 98, 98);
-  border-radius: 100%;
-  padding: 7px 10px;
+  justify-content: center;
 }
 
 .Signin-Form-Container {
-  width: 25%;
-}
-
-.Signin-Form-Container form {
-  margin-top: 3%;
-  width: 100%;
+  margin-top: 20px;
+  width: 15em;
 }
 
 .Signin-Email div,
@@ -30,8 +18,8 @@
 }
 
 .Signin-Button {
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .Signin-Forget:hover {

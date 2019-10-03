@@ -7,6 +7,8 @@ import Home from './components/Home/Home';
 import Footer from './components/Footer/Footer';
 import SignUp from './components/SignUp/SignUp';
 import Dashboard from './components/Dashboard/Dashboard';
+import Navbar from './components/Navbar/Navbar';
+import DisplaySnackBar from './components/DisplaySnackBar/DisplaySnackBar';
 
 class App extends Component {
   render() {
@@ -28,6 +30,7 @@ class App extends Component {
               path='/user/signup'
               render={() => (
                 <Fragment>
+                  <Navbar route='signup' />
                   <SignUp />
                 </Fragment>
               )}
@@ -37,6 +40,7 @@ class App extends Component {
               path='/user/signin'
               render={() => (
                 <Fragment>
+                  <Navbar route='signin' />
                   <Login />
                 </Fragment>
               )}
@@ -53,6 +57,7 @@ class App extends Component {
             />
           </Switch>
         </BrowserRouter>
+        <DisplaySnackBar />
       </div>
     );
   }

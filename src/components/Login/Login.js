@@ -1,55 +1,57 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Typography, TextField, Button, CircularProgress } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import './Login.css';
 
-import { Typography, TextField, Button } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import "../Navbar/Navbar";
-import "./Login.css";
-
-import { signin } from "../../controllers/signin";
-import Navbar from "../Navbar/Navbar";
+import { signin } from '../../controllers/signin';
+import { getProjects } from '../../controllers/projects';
+import { userLogin } from '../../redux/actions/auth';
 
 const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
 );
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      errorMessageEmail: "",
-      errorMessagePassword: "",
-      redirect: false
+      email: '',
+      password: '',
+      errorMessageEmail: '',
+      errorMessagePassword: '',
+      redirect: false,
+      validating: true,
+      whiteLoader: false,
     };
   }
 
-  handleChangeEmail = e => {
+  handleChangeEmail = (e) => {
     const value = e.target.value;
-    let error = "";
+    let error = '';
     if (!value) {
-      error = "This field is required.";
+      error = 'This field is required.';
     } else if (!emailRegex.test(value)) {
-      error = "Invalid Email.";
+      error = 'Invalid Email.';
     }
     this.setState({
-      errorMessageEmail: error
+      errorMessageEmail: error,
     });
   };
 
-  handleChangePassword = e => {
+  handleChangePassword = (e) => {
     const value = e.target.value;
-    let error = "";
+    let error = '';
     if (!value) {
-      error = "This field is required.";
+      error = 'This field is required.';
     }
     this.setState({
-      errorMessagePassword: error
+      errorMessagePassword: error,
     });
   };
 
-  handleFieldChange = e => {
+  handleFieldChange = (e) => {
     const { value, name } = e.target;
     this.setState({ [name]: value });
   };
@@ -64,102 +66,136 @@ class Login extends Component {
     return false;
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const isWrong = this.isDisabled();
 
     if (!isWrong) {
       const data = { email: this.state.email, password: this.state.password };
-      signin(data).then(res => {
+      this.setState({ validating: true, whiteLoader: true });
+      signin(data).then((res) => {
         if (!res.error) {
-          localStorage.setItem("jwt", res.access_token);
+          localStorage.setItem('jwt', res.access_token);
           this.setState({ redirect: true });
         } else {
-          if (res.errorType === "email") {
+          if (res.errorType === 'email') {
             this.setState({ errorMessageEmail: res.errorMessage });
-          } else if (res.errorType === "password") {
+          } else if (res.errorType === 'password') {
             this.setState({ errorMessagePassword: res.errorMessage });
           } else {
-            alert("Interal Server error.");
+            alert('Interal Server error.');
           }
+          this.setState({ validating: false, whiteLoader: false });
         }
       });
     }
   };
 
+  componentDidMount() {
+    const { auth } = this.props;
+    if (auth) {
+      this.setState({ redirect: true });
+    } else {
+      // validate jwt token from local storage if exists.
+      const jwt = localStorage.getItem('jwt');
+      if (jwt) {
+        getProjects(jwt).then((res) => {
+          if (!res.error) {
+            this.props.dispatch(userLogin({...res.userData}));
+            this.setState({ redirect: true });
+          } else {
+            this.setState({ validating: false });
+          }
+        });
+      } else {
+        this.setState({ validating: false });
+      }
+    }
+  }
+
   render() {
     const isDisabled = this.isDisabled();
 
     if (this.state.redirect) {
-      return <Redirect to="/dashboard" />;
+      return <Redirect to='/dashboard' />;
     }
 
+    const { errorMessageEmail, errorMessagePassword, validating, whiteLoader } = this.state;
+
     return (
-      <div className="Signin">
-        <Navbar Login/>
-        <div className="Signup-Container">
-          <div className="Avatar">
-            <LockOutlinedIcon />
-          </div>
-          <div className="Signin-Header">
-            <Typography variant="h5">Sign in</Typography>
-          </div>
-          <div className="Signin-Form-Container">
-            <form noValidate onSubmit={this.handleSubmit}>
-              <div className="Signin-Email">
-                <TextField
-                  label="Email *"
-                  margin="dense"
-                  name="email"
-                  variant="outlined"
-                  error={this.state.errorMessageEmail ? true : false}
-                  helperText={this.state.errorMessageEmail}
-                  onBlur={this.handleChangeEmail}
-                  onChange={this.handleFieldChange}
-                />
-              </div>
+      <div className='Signin-Container'>
+        <div className='Avatar'>
+          <LockOutlinedIcon />
+        </div>
+        <div className='Signin-Header'>
+          <Typography variant='h5'>Sign in</Typography>
+        </div>
+        <div className='Signin-Form-Container'>
+          <form noValidate onSubmit={this.handleSubmit}>
+            <div className='Signin-Email'>
+              <TextField
+                label='Email *'
+                margin='dense'
+                name='email'
+                variant='outlined'
+                error={errorMessageEmail ? true : false}
+                helperText={errorMessageEmail}
+                onBlur={this.handleChangeEmail}
+                onChange={this.handleFieldChange}
+              />
+            </div>
 
-              <div className="Signin-Password">
-                <TextField
-                  label="Password *"
-                  name="password"
-                  type="password"
-                  margin="dense"
-                  variant="outlined"
-                  error={this.state.errorMessagePassword ? true : false}
-                  helperText={this.state.errorMessagePassword}
-                  onBlur={this.handleChangePassword}
-                  onChange={this.handleFieldChange}
-                />
-              </div>
+            <div className='Signin-Password'>
+              <TextField
+                label='Password *'
+                name='password'
+                type='password'
+                margin='dense'
+                variant='outlined'
+                error={errorMessagePassword ? true : false}
+                helperText={errorMessagePassword}
+                onBlur={this.handleChangePassword}
+                onChange={this.handleFieldChange}
+              />
+            </div>
 
-              <div className="Signin-Button">
-                <Button
-                  variant="contained"
-                  type="submit"
-                  size="medium"
-                  color="primary"
-                  disabled={isDisabled}
-                >
-                  Submit
-                </Button>
-              </div>
+            <div className='Signin-Button'>
+              <Button
+                variant='contained'
+                type='submit'
+                size='medium'
+                color='primary'
+                disabled={isDisabled}
+              >
+                {validating ? (
+                  <Fragment>
+                    <CircularProgress
+                      size={24}
+                      thickness={5}
+                      style={whiteLoader ? { color: 'white' } : {}}
+                    />
+                    &nbsp; Trying to log you in
+                  </Fragment>
+                ) : (
+                  'Submit'
+                )}
+              </Button>
+            </div>
 
-              <div>
-                <Typography
-                  color="primary"
-                  className="Signin-Forget"
-                  variant="body2"
-                >
-                  Forget password?
-                </Typography>
-              </div>
-            </form>
-          </div>
+            <div>
+              <Typography color='primary' className='Signin-Forget' variant='body2'>
+                Forget password?
+              </Typography>
+            </div>
+          </form>
         </div>
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return state.auth;
+};
+
+export default connect(mapStateToProps)(Login);

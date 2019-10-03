@@ -1,6 +1,6 @@
 .Project-Card {
-  width: 70vw;
-  margin: 3% 15%;
+  width: 85%;
+  margin: 1% auto;
 }
 
 .Project-Card-Header,
@@ -9,25 +9,19 @@
 }
 
 .Project-Card-Header {
-  margin-top: 2%;  
+  margin-top: 2%;
   display: flex;
-  flex-direction: row;
-}
-.Project-Card-Header-Name{
-  width: 400px;
-}
-.Project-Card-Icon{
- 
- margin-left: 25%;
- width: 220px;
- justify-content:space-between;
- display: flex;
- flex-direction: row;
-}
-.Project-Card-Edit-Icon{
-  
+  justify-content: space-between;
 }
 
+.Project-Card-Icons>div {
+  display: inline;
+  margin: 0 5px;
+}
+
+.Project-Card-Icons>div>button>span>svg {
+  font-size: 1.3em;
+}
 
 .Project-Card-Expand-Button,
 .Project-Card-Compress-Button {

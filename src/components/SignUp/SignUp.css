@@ -1,4 +1,4 @@
-.Signup-Container {
+.Signup {
   margin-top: 3%;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@
   display: inline;
   color: white;
   margin: 1%;
-  background-color: rgb(235, 79, 105);
+  background-color: rgb(211, 98, 98);
   border-radius: 100%;
   padding: 7px 10px;
 }

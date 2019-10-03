@@ -13,8 +13,10 @@
     "react-dom": "^16.9.0",
     "react-lazy-load": "^3.0.13",
     "react-lazyload": "^2.6.2",
+    "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1"
+    "react-scripts": "3.1.1",
+    "redux": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

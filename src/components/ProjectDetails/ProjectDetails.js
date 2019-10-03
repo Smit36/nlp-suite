@@ -3,7 +3,6 @@ import { Bar, Line } from 'react-chartjs-2';
 import './ProjectDetails.css';
 
 import { getByDay } from '../../controllers/time';
-import { Typography } from '@material-ui/core';
 
 class ProjectDetails extends React.Component {
   constructor(props) {
@@ -25,14 +24,14 @@ class ProjectDetails extends React.Component {
           {
             data: [0, 17, 5, 2, 20, 15, 45],
             label: 'Translator',
-            backgroundColor:'rgba(231,98,122,0.6)',
-            borderColor:'rgba(231,98,122,0.1)'
+            backgroundColor: 'rgb(15,157,88)',
+            borderColor: 'rgb(15,157,88)',
           },
           {
             data: [0, 17, 5, 2, 20, 15, 45],
             label: 'Entities',
-            backgroundColor:'rgba(0,176,255,0.6)',
-            borderColor:'rgba(0,176,255,0.1)' ,
+            backgroundColor: 'rgb(66,133,244)',
+            borderColor: 'rgb(66,133,244)',
           },
         ],
       },
@@ -59,29 +58,50 @@ class ProjectDetails extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='Project-Details-Content'>
         <div className='Allowed-Apis'>
-        <Typography variant='body1'><b>Allowed API Calls</b>:<span>{this.props.allowedApis.join(', ')}</span></Typography> 
+          <b>Allowed API calls</b>: <span>{this.props.allowed_apis.join(', ')}</span>
         </div>
         <div className='Graphs-Container'>
           <div className='Graph'>
-            <Bar
-              data={this.state.data}
-              options={{
-                scales: {
-                  yAxes: [
-                    {
-                      ticks: {
-                        beginAtZero: true,
+            <div>
+              <Bar
+                data={this.state.data}
+                options={{
+                  scales: {
+                    yAxes: [
+                      {
+                        ticks: {
+                          beginAtZero: true,
+                        },
                       },
-                    },
-                  ],
-                },
-                maintainAspectRatio: true,
-              }}
-            />
+                    ],
+                  },
+                  maintainAspectRatio: false,
+                }}
+                className='Bar'
+              />
+            </div>
+            <div>
+              <Bar
+                data={this.state.data}
+                options={{
+                  scales: {
+                    yAxes: [
+                      {
+                        ticks: {
+                          beginAtZero: true,
+                        },
+                      },
+                    ],
+                  },
+                  maintainAspectRatio: false,
+                }}
+                className='Bar'
+              />
+            </div>
           </div>
-        </div>       
+        </div>
       </div>
     );
   }

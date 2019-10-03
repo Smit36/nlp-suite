@@ -5,3 +5,13 @@
 .Graphs-Container {
   margin-top: 20px;
 }
+
+.Graph {
+  display: flex;
+  flex: 1;
+}
+
+.Graph div {
+  flex: 1;
+  height: 300px;
+}
